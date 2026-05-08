@@ -1,56 +1,191 @@
-# Welcome to your Expo app 👋
+# 🌱 TRACK — Habit Building App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A personal habit-tracking mobile app built with **React Native** and **Expo**. Build streaks, stay consistent, and become the best version of yourself — one small habit at a time.
 
-## Get started
+---
 
-1. Install dependencies
+## 📸 Screenshots
 
-   ```bash
-   npm install
-   ```
+<div align="center">
+  <img src="Screenshot 2026-05-08 165136.png" alt="Calculator" width="200" />
+  <img src="Screenshot 2026-05-08 165350.png" alt="Calculator" width="200" />
+  <img src="Screenshot 2026-05-08 165411.png" alt="Calculator" width="200" />
+  <img src="Screenshot 2026-05-08 165419.png" alt="Calculator" width="200" />   
+</div>
 
-2. Start the app
 
-   ```bash
-   npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## 📱 Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- ✅ Track daily habits and build streaks
+- 🔔 Push notifications (iOS & Android)
+- ⏰ Daily reminders at 9:00 AM
+- 🌙 Dark mode support
+- ⭐ In-app rating system
+- 🔒 Privacy Policy & Terms of Service
+- 🚪 Logout / onboarding flow
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🛠 Tech Stack
 
-When you're ready, run:
+| Technology | Purpose |
+|---|---|
+| React Native | Mobile UI framework |
+| Expo | Build & development toolchain |
+| Expo Router | File-based navigation |
+| expo-notifications | Push & scheduled notifications |
+| expo-device | Device detection for notification guards |
+| TypeScript | Type safety |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- Expo CLI
+- iOS Simulator / Android Emulator **or** a physical device with Expo Go
+
+### Installation
 
 ```bash
-npm run reset-project
+# 1. Clone the repository
+git clone https://github.com/your-username/track-app.git
+cd track-app
+
+# 2. Install dependencies
+npm install
+
+# 3. Install notification packages
+npx expo install expo-notifications expo-device
+
+# 4. Start the development server
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## 🔔 Push Notifications Setup
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Push notifications use `expo-notifications` and **only work on real physical devices** (iOS & Android). They are not supported in the browser (Expo Web).
 
-## Learn more
+### How it works
 
-To learn more about developing your project with Expo, look at the following resources:
+| Trigger | Behavior |
+|---|---|
+| Toggle "Push Notifications" ON | Requests OS permission, sends an immediate confirmation notification |
+| Toggle "Daily Reminders" ON | Schedules a repeating notification every day at **9:00 AM** |
+| Toggle either OFF | Cancels all scheduled notifications |
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Platform support
 
-## Join the community
+| Platform | Push Notifications |
+|---|---|
+| Android (Expo Go) | ✅ Fully supported |
+| iOS (Dev Build) | ✅ Fully supported |
+| iOS (Expo Go) | ⚠️ Immediate notifications work; scheduled triggers limited |
+| Web / Browser | ❌ Not supported — shows a friendly alert instead |
 
-Join our community of developers creating universal apps.
+### Android Notification Channel
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+On Android, a dedicated notification channel called **"Habit Reminders"** is created automatically with:
+- High importance
+- Vibration pattern enabled
+- Accent color: `#4A90D9`
+
+---
+
+## 📁 Project Structure
+
+```
+track-app/
+├── app/
+│   ├── index.tsx          # Welcome / onboarding screen
+│   ├── settings.tsx       # Settings screen (this file)
+│   └── ...                # Other screens
+├── assets/                # Images, icons, fonts
+├── components/            # Reusable UI components
+├── app.json               # Expo configuration
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙️ Settings Screen Overview
+
+The Settings screen (`settings.tsx`) includes:
+
+### Preferences (Toggles)
+- **Push Notifications** — Requests device permission and fires a live notification on enable
+- **Dark Mode** — Switches the UI between light and dark themes
+- **Daily Reminders** — Schedules a recurring 9:00 AM habit reminder
+
+### Information (Modals)
+- **About** — App version and description
+- **Privacy Policy** — Data usage and storage details
+- **Terms of Service** — Usage terms and conditions
+- **Rate App** — Interactive 5-star rating UI
+
+### Actions
+- **Log Out** — Confirmation dialog, navigates back to the welcome screen
+
+---
+
+## 🔧 Customizing the Reminder Time
+
+To change the daily reminder time, update the `scheduleDailyReminder` function in `settings.tsx`:
+
+```typescript
+trigger: {
+  hour: 9,    // Change this (0–23)
+  minute: 0,  // Change this (0–59)
+  repeats: true,
+},
+```
+
+---
+
+## 🧪 Testing Notifications
+
+1. Run the app on a **physical device** using Expo Go
+2. Open **Settings** in the app
+3. Toggle **Push Notifications** ON
+4. Accept the permission prompt
+5. You should receive a notification immediately: *"🔔 Notifications Enabled!"*
+6. Toggle **Daily Reminders** ON to schedule the 9:00 AM daily notification
+
+> 💡 To test scheduled notifications quickly, temporarily change the trigger `hour` and `minute` to a time a few minutes from now.
+
+---
+
+## 🔐 Privacy
+
+- All data is stored **locally on the device** — nothing is sent to external servers
+- No personal identifying information is collected
+- Notifications are scheduled locally using `expo-notifications` — no remote push server required
+- Full privacy policy is available inside the app under **Settings → Privacy Policy**
+
+---
+
+## 📄 License
+
+```
+© 2026 TRACK App. All rights reserved.
+```
+
+---
+
+## 💬 Contact
+
+| Purpose | Email |
+|---|---|
+| Privacy inquiries | privacy@trackapp.io |
+| Legal inquiries | legal@trackapp.io |
+| General support | support@trackapp.io |
+
+---
+
+> Built with ❤️ using React Native & Expo. Designed to be simple, beautiful, and distraction-free.
